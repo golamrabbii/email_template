@@ -6,15 +6,7 @@ from email.mime.text import MIMEText
 from jinja2 import Environment       
 
 def send_mail(name,TO,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count):
-
-    print(name)
-    print(TO)
-    print(auto_complete_count)
-    print(geo_code_count)
-    print(reverse_geo_code_count)
-    print(distance_count)
-    print(nearby_count)
-
+    
     TEMPLATE = """
     <!DOCTYPE html>
     <html lang="en">
@@ -128,21 +120,19 @@ p{
        name = name,autocomplete = auto_complete_count,geocode = geo_code_count, reverse_geo = reverse_geo_code_count,nearby = nearby_count, distance = distance_count
     ), "html"
     )
-    FROM = "rh622984@gmail.com"
+    FROM = "sender_email_address"
     msg['Subject'] = "Barikoi API Usages"
     msg['From'] = FROM
     msg['To'] = TO
 
     server = smtplib.SMTP('smtp.gmail.com:587')
-    password = "01687922852"
+    password = "sender_email_password"
     server.starttls()
     server.login(FROM,password)
     server.sendmail(FROM, [TO], msg.as_string().encode('utf8'))
     server.quit()
 
 if __name__ == "__main__":
-    
-    print("db method")
     mydb = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -153,7 +143,6 @@ if __name__ == "__main__":
     cursor = mydb.cursor()
     cursor.execute(query)
     records = cursor.fetchall()
-    #print(records)
     for i in records:
         auto_complete_count = i[1]
         geo_code_count = i[2]
