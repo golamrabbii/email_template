@@ -58,13 +58,15 @@ body{
   background-color: white;
   font-family:'Open Sans',sans-serif;
 }
+img{
+  position: relative;
+  left: 300px;
+}
 </style>
 </head>
 <body>
 <header>
-<center>
    <a href="https://barikoi.com"><img src="https://barikoi.com/views/assets/img/logo2.png" ></a>
-</center>
 </header>
 <br><br>
 <p style="font-size:15px;">Hi <b>{{name}}</b></p>
@@ -123,8 +125,8 @@ if __name__ == "__main__":
     mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="12345",
-            database="test_db_",
+            passwd="root",
+            database="ethikana",
         )
     query = "select id,name,email from users where id=1481 or id=1486 or id=17 or id=12 or id=1"
     cursor = mydb.cursor()
