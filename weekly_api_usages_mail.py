@@ -152,4 +152,4 @@ if __name__ == "__main__":
           distance_sum+=log[i]['distance']
           nearby_sum+=log[i]['nearby']
 
-        send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
+      send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
