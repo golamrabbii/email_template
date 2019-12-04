@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from jinja2 import Environment       
 
-def send_mail(name,TO,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count):
+def send_mail(name,TO,message,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count):
 
     TEMPLATE = """
    <!DOCTYPE html>
@@ -68,7 +68,7 @@ body{
 <br><br>
 <p style="font-size:15px;">Hi <b>{{name}}</b></p>
 <p style="font-size:15px;">Greetings from <b>Barikoi Technologies Limited</b></p>
-<p style="font-size:15px;">Thanking you for using Barikoi API. Here is your API usage for last week. (Last 7 Days)</p>
+<p style="font-size:15px;">Thanking you for using Barikoi API. {{ msg }}</p>
           <br>
           <table>
             <thead>
@@ -102,16 +102,16 @@ body{
     """  
     msg = MIMEText(
     Environment().from_string(TEMPLATE).render(
-       name = name,autocomplete = auto_complete_count,geocode = geo_code_count, reverse_geo = reverse_geo_code_count,nearby = nearby_count, distance = distance_count
+       name = name,msg = message,autocomplete = auto_complete_count,geocode = geo_code_count, reverse_geo = reverse_geo_code_count,nearby = nearby_count, distance = distance_count
     ), "html"
     )
-    FROM = "rh622984@gmail.com"
+    FROM = "hello@barikoi.com"
     msg['Subject'] = "Barikoi API Usages"
     msg['From'] = FROM
     msg['To'] = TO
 
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    password = "01687922852"
+    server = smtplib.SMTP('smtp.zoho.com:587')
+    password = "mirpur1216barikoi"
     server.starttls()
     server.login(FROM,password)
     server.sendmail(FROM, [TO], msg.as_string().encode('utf8'))
@@ -125,7 +125,7 @@ if __name__ == "__main__":
             passwd="12345",
             database="test_db_",
         )
-    query = "select user_id,autocomplete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count from tokens where isActive=1 and user_id=1486"
+    query = "select user_id,autocomplete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count from tokens where isActive=1 and user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12"
     cursor = mydb.cursor()
     cursor.execute(query)
     records = cursor.fetchall()
@@ -142,4 +142,14 @@ if __name__ == "__main__":
         for j in record:
             name = j[0]
             email = j[1]
-        send_mail(name,email,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count)
+        if auto_complete_count == 0 and geo_code_count == 0 and reverse_geo_code_count == 0 and distance_count == 0 and nearby_count == 0 :
+              message = "You have not use any API yet."
+              send_mail(name,email,message,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count)
+
+        else:
+              message = "Here is your total API usages."
+              send_mail(name,email,message,auto_complete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count)
+          
+
+        
+        
