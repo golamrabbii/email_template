@@ -65,9 +65,11 @@ img{
 </style>
 </head>
 <body>
+<center>
 <header>
    <a href="https://barikoi.com"><img src="https://barikoi.com/views/assets/img/logo2.png" ></a>
 </header>
+</center>
 <br><br>
 <p style="font-size:15px;">Hi <b>{{name}}</b></p>
 <p style="font-size:15px;">Greetings from <b>Barikoi Technologies Limited</b></p>
@@ -125,31 +127,41 @@ if __name__ == "__main__":
     mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="root",
-            database="ethikana",
+            passwd="12345",
+            database="test_db_",
         )
-    query = "select id,name,email from users where id=1481 or id=1486 or id=17 or id=12 or id=1"
+query = "select `user_id`,`key` from tokens where isActive=1 and user_id=1486"
+
+cursor = mydb.cursor()
+cursor.execute(query)
+records = cursor.fetchall()
+
+
+for i in records:
+    user_id=i[0]
+    api_key=i[1]
+
+    query = "select name,email from users where id ="+str(user_id)
+
     cursor = mydb.cursor()
     cursor.execute(query)
-    records = cursor.fetchall()
-    for i in records:
+    user_data = cursor.fetchall()
 
-      user_id = str(i[0])
-      day = '7'
-      name = i[1]
-      email = i[2]
+    for j in user_data:
+        name = j[0]
+        email = j[1]
 
-      autocomlpete_sum,reverse_geo_sum,geocode_sum,distance_sum,nearby_sum=0,0,0,0,0
+    api = 'https://admin.barikoi.xyz:8080/bkoi/logreader/CheckUsage?key='+api_key+'&day=6'
 
-      url = "http://13.251.2.198:8080/bkoi/apilog/showDayUsage?day="+day+"&id="+user_id
-      r = requests.get(url = url)
-      log = r.json()
-      if log:
-        for i in log:
-          autocomlpete_sum+=log[i]['autocomplete']
-          reverse_geo_sum+=log[i]['reverse_geocode']
-          geocode_sum+=log[i]['geocode']
-          distance_sum+=log[i]['distance']
-          nearby_sum+=log[i]['nearby']
+    connection = requests.get(url = api)
 
-      send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
+    autocomlpete_sum,reverse_geo_sum,geocode_sum,distance_sum,nearby_sum=0,0,0,0,0
+
+    data = connection.json()
+    for i in data:
+        autocomlpete_sum+=i['autocomplete']
+        reverse_geo_sum+=i['reverse_geocode']
+        geocode_sum+=i['geocode']
+        distance_sum+=i['distance']
+        nearby_sum+=i['nearby']
+        send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
