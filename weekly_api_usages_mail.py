@@ -130,7 +130,7 @@ if __name__ == "__main__":
             passwd="root",
             database="ethikana",
         )
-query = "select `user_id`,`key` from tokens where isActive=1 and user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12"
+query = "select `user_id`,`key` from tokens where isActive=1 and (user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12)"
 
 cursor = mydb.cursor()
 cursor.execute(query)
