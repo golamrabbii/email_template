@@ -122,8 +122,8 @@ if __name__ == "__main__":
     mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="12345",
-            database="test_db_",
+            passwd="root",
+            database="ethikana",
         )
     query = "select user_id,autocomplete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count from tokens where isActive=1 and user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12"
     cursor = mydb.cursor()
