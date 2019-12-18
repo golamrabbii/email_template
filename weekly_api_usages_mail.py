@@ -127,10 +127,10 @@ if __name__ == "__main__":
     mydb = mysql.connector.connect(
             host="localhost",
             user="root",
-            passwd="12345",
-            database="test_db_",
+            passwd="root",
+            database="ethikana",
         )
-query = "select `user_id`,`key` from tokens where isActive=1 and user_id=1486"
+query = "select `user_id`,`key` from tokens where isActive=1 and user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12"
 
 cursor = mydb.cursor()
 cursor.execute(query)
@@ -158,10 +158,11 @@ for i in records:
     autocomlpete_sum,reverse_geo_sum,geocode_sum,distance_sum,nearby_sum=0,0,0,0,0
 
     data = connection.json()
-    for i in data:
-        autocomlpete_sum+=i['autocomplete']
-        reverse_geo_sum+=i['reverse_geocode']
-        geocode_sum+=i['geocode']
-        distance_sum+=i['distance']
-        nearby_sum+=i['nearby']
-        send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
+    if data:
+      for i in data:
+          autocomlpete_sum+=i['autocomplete']
+          reverse_geo_sum+=i['reverse_geocode']
+          geocode_sum+=i['geocode']
+          distance_sum+=i['distance']
+          nearby_sum+=i['nearby']
+    send_mail(name,email,autocomlpete_sum,geocode_sum,reverse_geo_sum,distance_sum,nearby_sum)
