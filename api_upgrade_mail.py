@@ -14,7 +14,6 @@ def send_mail(name,TO,message,auto_complete_count,geo_code_count,reverse_geo_cod
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Barikoi API Usage</title>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <style>
     header img {
@@ -88,9 +87,7 @@ body{
             </tbody>
           </table>
           <br>
-          <p style="font-size:14px;">Best Wishes</p> 
-          <p style="font-size:15px;"><b>Team Barikoi</b></p>
-<center>
+         <center>
       <br>
         </center>
 </body>
