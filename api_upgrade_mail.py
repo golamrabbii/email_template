@@ -62,14 +62,11 @@ body{
 <body>
 <header>
 <center>
-   <a href="https://barikoi.com"><img src="https://barikoi.com/views/assets/img/logo2.png" ></a>
-</center>
+   </center>
 </header>
 <br><br>
 <p style="font-size:15px;">Hi <b>{{name}}</b></p>
-<p style="font-size:15px;">Greetings from <b>Barikoi Technologies Limited</b></p>
-<p style="font-size:15px;">Thanking you for using Barikoi API. {{ msg }}</p>
-          <br>
+<br>
           <table>
             <thead>
               <tr>
@@ -95,8 +92,7 @@ body{
           <p style="font-size:15px;"><b>Team Barikoi</b></p>
 <center>
       <br>
-        <b> &copy; 2019 Barikoi Technologies Limited </b>
-</center>
+        </center>
 </body>
 </html> 
     """  
@@ -105,13 +101,13 @@ body{
        name = name,msg = message,autocomplete = auto_complete_count,geocode = geo_code_count, reverse_geo = reverse_geo_code_count,nearby = nearby_count, distance = distance_count
     ), "html"
     )
-    FROM = "hello@barikoi.com"
-    msg['Subject'] = "Barikoi API Usages"
+    FROM = "mail_address"
+    msg['Subject'] = "API Usages"
     msg['From'] = FROM
     msg['To'] = TO
 
     server = smtplib.SMTP('smtp.zoho.com:587')
-    password = "mirpur1216barikoi"
+    password = "password"
     server.starttls()
     server.login(FROM,password)
     server.sendmail(FROM, [TO], msg.as_string().encode('utf8'))
@@ -123,7 +119,7 @@ if __name__ == "__main__":
             host="localhost",
             user="root",
             passwd="root",
-            database="ethikana",
+            database="database_name",
         )
     query = "select user_id,autocomplete_count,geo_code_count,reverse_geo_code_count,distance_count,nearby_count from tokens where isActive=1 and user_id=1486 or user_id=1481 or user_id=1 or user_id=17 or user_id=12"
     cursor = mydb.cursor()
